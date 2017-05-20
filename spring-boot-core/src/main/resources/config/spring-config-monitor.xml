@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 配置druid监控spring -->
+    <bean id="druid-stat-interceptor"
+          class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor"/>
+
+    <!-- 方法名正则匹配拦截配置 -->
+    <bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut"
+          scope="prototype">
+        <property name="patterns">
+            <list>
+                <value>com.base.core.web.*</value>
+            </list>
+        </property>
+    </bean>
+    <!-- 开启切面编程功能 -->
+    <aop:config>
+        <aop:advisor id="druidAdvisor" advice-ref="druid-stat-interceptor"
+                     pointcut-ref="druid-stat-pointcut"/>
+    </aop:config>
+    <!-- 配置druid监控spring END-->
+
+    <!--用户权限控制aop-->
+    <bean id="userPermissions" class="com.pro.base.aop.UserPermissionsAspect"/>
+    <aop:config>
+        <aop:aspect id="userPermissions-aspect" ref="userPermissions">
+            <aop:pointcut id="UserPermissionMgr"
+                          expression="(execution(public * com.base.core.web.*Controller.*(..)))&amp;&amp;(@annotation(com.pro.base.oauth.UserPermissions))"/>
+            <aop:before method="doBefore" pointcut-ref="UserPermissionMgr"/>
+        </aop:aspect>
+    </aop:config>
+    <!--用户权限控制aop END-->
+</beans>

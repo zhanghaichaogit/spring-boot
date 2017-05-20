@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.baseBoot</groupId>
+        <artifactId>spring-boot-parent</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../spring-boot-parent/pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.baseBoot</groupId>
+    <artifactId>spring-boot-core</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+    <name>spring-boot-core</name>
+    <description>SpringBootCore</description>
+    <dependencies>
+        <dependency>
+            <groupId>com.baseBoot</groupId>
+            <artifactId>java-base-program</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+</project>

@@ -1,0 +1,6 @@
+com\pro\base\aop\WebLogAspect.class
+com\pro\base\oauth\UserPermissions.class
+com\pro\base\domain\ServiceResult.class
+com\pro\base\SimpleApplication.class
+com\pro\base\monitor\MybatisMonitor.class
+com\pro\base\aop\UserPermissionsAspect.class
