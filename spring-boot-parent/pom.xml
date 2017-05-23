@@ -75,25 +75,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
-        <!-- mybatis for spring boot -->
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>${mybatis-spring.boot.version}</version>
-        </dependency>
-        <!-- 连接池旧版本的需要用spring aop来监控更新版本后将适应spring-boot -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>${alibaba.druid.version}</version>
-        </dependency>
-
-        <!-- 数据库驱动 -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql-connector-java.version}</version>
-        </dependency>
 
         <!--redis-->
         <dependency>
@@ -113,6 +94,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!--rabbitmq-->
+        <!--<dependency>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-amqp</artifactId>-->
+        <!--</dependency>-->
     </dependencies>
 
     <build>
@@ -237,6 +224,12 @@
                 <pom.jdbc.host.password>
                 </pom.jdbc.host.password>
 
+                <!-- Redis配置参数 -->
+                <pom.redis.sentinel.nodes>127.0.0.1:27000</pom.redis.sentinel.nodes>
+                <pom.redis.sentinel.master>mymaster</pom.redis.sentinel.master>
+                <pom.redis.database>3</pom.redis.database>
+                <pom.redis.password></pom.redis.password>
+                <!--下面的是默认的redis配置单点的-->
                 <spring.redis.database>0</spring.redis.database>
                 <spring.redis.host>127.0.0.1</spring.redis.host>
                 <spring.redis.port>6379</spring.redis.port>
@@ -274,5 +267,6 @@
     <modules>
         <module>../java-base-program</module>
         <module>../spring-boot-core</module>
+        <module>../spring-boot-redis-sentinel</module>
     </modules>
 </project>

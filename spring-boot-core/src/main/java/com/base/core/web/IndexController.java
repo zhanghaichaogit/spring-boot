@@ -23,6 +23,7 @@ public class IndexController {
     @Resource
     private JedisPool jedisPool;
 
+
     /**
      * 查询用户
      *
@@ -71,7 +72,7 @@ public class IndexController {
     }
 
     /**
-     * redis 测试
+     * redis 测试 这个是默认连接一个redis服务的情况
      *
      * @return
      */

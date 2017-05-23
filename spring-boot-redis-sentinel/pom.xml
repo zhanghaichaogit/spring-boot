@@ -10,37 +10,24 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.baseBoot</groupId>
-    <artifactId>spring-boot-core</artifactId>
+    <artifactId>spring-boot-redis-sentinel</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-    <name>spring-boot-core</name>
-    <description>SpringBootCore</description>
+    <name>spring-boot-redis-sentinel</name>
+    <description>springbootredissentinel</description>
     <dependencies>
+        <!--引用base-program-->
         <dependency>
             <groupId>com.baseBoot</groupId>
             <artifactId>java-base-program</artifactId>
             <version>1.0.0</version>
         </dependency>
 
-        <!-- mybatis for spring boot -->
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>${mybatis-spring.boot.version}</version>
-        </dependency>
-        <!-- 连接池旧版本的需要用spring aop来监控更新版本后将适应spring-boot -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>${alibaba.druid.version}</version>
-        </dependency>
 
-        <!-- 数据库驱动 -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql-connector-java.version}</version>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${jedis.version}</version>
         </dependency>
-
     </dependencies>
 </project>

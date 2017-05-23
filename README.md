@@ -11,3 +11,6 @@ spring-boot-mybatis 主要测试使用，运行用core
 
 将所有的aop base方法啊参数全都放到java-base-program里面
 
+
+redis 使用一主多从 哨兵模式 spring-boot-redis-sentinel
+

@@ -44,6 +44,8 @@
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>${mybatis-spring.boot.version}</version>
+            <!--以来可选，防止以来传递到其他不想用的地方去，其他地方想用的话必须要手动再次引用-->
+            <optional>true</optional>
         </dependency>
         <!-- 连接池旧版本的需要用spring aop来监控更新版本后将适应spring-boot -->
         <dependency>
@@ -82,6 +84,11 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>${alibaba.fastjson.version}</version>
+        </dependency>
+        <!--redis-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
     </dependencies>
 
