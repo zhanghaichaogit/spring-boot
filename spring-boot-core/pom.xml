@@ -6,7 +6,7 @@
         <groupId>com.baseBoot</groupId>
         <artifactId>spring-boot-parent</artifactId>
         <version>1.0.0</version>
-        <relativePath>../spring-boot-parent/pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.baseBoot</groupId>

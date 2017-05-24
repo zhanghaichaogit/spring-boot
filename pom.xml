@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.2.RELEASE</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.baseBoot</groupId>
+    <artifactId>spring-boot-parent</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <name>spring-boot-parent</name>
+    <description>SpringBoot集成</description>
+    <properties>
+        <!-- base setting -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.build.locales>zh_CN</project.build.locales>
+        <project.build.jdk>1.8</project.build.jdk>
+        <!-- plugin versions -->
+        <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+        <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
+        <maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
+        <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
+        <druid-spring-boot-starter.version>1.0.29-SNAPSHOT</druid-spring-boot-starter.version>
+
+        <!-- 项目依赖 -->
+        <mybatis-spring.boot.version>1.1.1</mybatis-spring.boot.version>
+        <mysql-connector-java.version>5.0.4</mysql-connector-java.version>
+        <alibaba.fastjson.version>1.2.24</alibaba.fastjson.version>
+        <alibaba.druid.version>1.0.28</alibaba.druid.version>
+        <spring-boot-starter-redis.version>2.1.0</spring-boot-starter-redis.version>
+
+
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <exclusions>
+                <!-- 排除logback -->
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- 模板引擎 freemarker，包含spring-boot-starter-web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- undertow容器 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
+        <!-- 切面AOP -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <!-- 日志log4j2 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+
+        <!--redis-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!-- JSON工具类 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${alibaba.fastjson.version}</version>
+        </dependency>
+        <!-- Spring boot Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!--rabbitmq-->
+        <!--<dependency>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-amqp</artifactId>-->
+        <!--</dependency>-->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- 1、使用parent，打包： mvn package-->
+            <!-- 2、使用依赖，打包： mvn package spring-boot:repackage -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <!--允许linux上注册服务-->
+                <configuration>
+                    <executable>true</executable>
+                    <fork>true</fork>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- 编译插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${project.build.jdk}</source>
+                    <target>${project.build.jdk}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <!-- 测试插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                    <!-- 如果单元测试中有输出中文，eclipse的控制台里中文可能会变成乱码输出 -->
+                    <argLine>-Dfile.encoding=UTF-8</argLine>
+                </configuration>
+            </plugin>
+            <!-- 设置resouce目录下的所有文件编码，否则如果配置xml文件中有中文字符，部署后可能会引起运行失败 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven-resources-plugin.version}</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <delimiters>
+                        <delimiter>@</delimiter>
+                        <delimiter>${*}</delimiter>
+                    </delimiters>
+                    <!-- 过滤后缀为pem、pfx的证书文件，即这些文件不会被maven替换属性 -->
+                    <!-- <nonFilteredFileExtensions>
+                      <nonFilteredFileExtension>p12</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions> -->
+                </configuration>
+            </plugin>
+            <!-- javadoc插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <!-- 配置导出配置 -->
+                    <outputDirectory>target\javadoc</outputDirectory>
+                    <reportOutputDirectory>target\javadoc</reportOutputDirectory>
+                    <failOnError>false</failOnError>
+                    <!-- 子模块的JavaDoc生成在父项目的target下 -->
+                    <aggregate>true</aggregate>
+                </configuration>
+            </plugin>
+            <!-- 打包同时生成源码包 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven-source-plugin.version}</version>
+                <configuration>
+                    <!--<encoding>UTF-8</encoding>-->
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        <!--配置资源文件过滤，如果有其他需要打包的资源，需要重载此配置节 -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.ftl</include>
+                    <include>banner.txt</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <!-- 是否开启模板缓存 -->
+                <pom.freemarker.cache>false</pom.freemarker.cache>
+                <pom.jdbc.host.url>
+                    jdbc:mysql://localhost:3306/test?serverTimezone=UTC
+                </pom.jdbc.host.url>
+                <pom.jdbc.host.username>root</pom.jdbc.host.username>
+                <pom.jdbc.host.password>
+                </pom.jdbc.host.password>
+
+                <!-- Redis配置参数 -->
+                <pom.redis.sentinel.nodes>127.0.0.1:27000</pom.redis.sentinel.nodes>
+                <pom.redis.sentinel.master>mymaster</pom.redis.sentinel.master>
+                <pom.redis.database>3</pom.redis.database>
+                <pom.redis.password></pom.redis.password>
+                <!--下面的是默认的redis配置单点的-->
+                <spring.redis.database>0</spring.redis.database>
+                <spring.redis.host>127.0.0.1</spring.redis.host>
+                <spring.redis.port>6379</spring.redis.port>
+                <spring.redis.password></spring.redis.password>
+                <!-- 日志 -->
+                <!--日志位置-->
+                <pom.log.dir>E:/App/JAVA/spring-boot-git/LOG</pom.log.dir>
+                <pom.log.name>springbootdruid</pom.log.name>
+                <pom.log.dir.backup>backup</pom.log.dir.backup>
+                <pom.log.filesize>5M</pom.log.filesize><!-- 日志切割的最小单位 -->
+                <pom.log.level>INFO</pom.log.level><!-- 日志输出级别 -->
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-devtools</artifactId>
+                    <!-- 可选依赖，依赖不会传递给第三方 -->
+                    <optional>true</optional>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>proc</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <!-- 是否开启模板缓存 -->
+                <pom.freemarker.cache>true</pom.freemarker.cache>
+            </properties>
+        </profile>
+    </profiles>
+
+    <!-- multiple Module -->
+    <modules>
+        <module>java-base-program</module>
+        <module>spring-boot-core</module>
+        <module>spring-boot-redis-sentinel</module>
+    </modules>
+</project>
