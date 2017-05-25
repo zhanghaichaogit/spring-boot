@@ -4,16 +4,16 @@ import com.alibaba.fastjson.JSON;
 import com.base.core.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 public class IndexController {
@@ -21,7 +21,7 @@ public class IndexController {
     @Resource
     private UserService userService;
     @Resource
-    private JedisPool jedisPool;
+    private StringRedisTemplate stringRedisTemplate;
 
 
     /**
@@ -79,12 +79,8 @@ public class IndexController {
     @ResponseBody
     @RequestMapping("jedis/set")
     public String jedisTest() {
-        try (Jedis jedis = jedisPool.getResource()) {
-            jedis.setex("123123123", 1000, "aaaaa");
-            return "success";
-        } catch (Exception e) {
-            return "false";
-        }
+        stringRedisTemplate.opsForValue().set("key", "value", 200, TimeUnit.SECONDS);
+        return "abc";
     }
 
     /**

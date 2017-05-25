@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.baseBoot</groupId>
+        <artifactId>spring-boot-parent</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.baseBoot</groupId>
+    <artifactId>spring-boot-redis-rabbitmq</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+    <name>spring-boot-redis-rabbitmq</name>
+    <description>springbootrabbitmq</description>
+    <dependencies>
+        <!--引用base-program-->
+        <dependency>
+            <groupId>com.baseBoot</groupId>
+            <artifactId>java-base-program</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+    </dependencies>
+</project>

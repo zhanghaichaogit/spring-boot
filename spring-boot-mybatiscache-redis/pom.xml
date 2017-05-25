@@ -10,16 +10,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.baseBoot</groupId>
-    <artifactId>spring-boot-core</artifactId>
+    <artifactId>spring-boot-mybatiscache-redis</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-    <name>spring-boot-core</name>
-    <description>SpringBootCore</description>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <name>spring-boot-mybatiscache-redis</name>
+    <description>spring-boot-mybatiscache-redis</description>
     <dependencies>
+        <!--引用base-program-->
         <dependency>
             <groupId>com.baseBoot</groupId>
             <artifactId>java-base-program</artifactId>
@@ -44,6 +41,13 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql-connector-java.version}</version>
+        </dependency>
+
+        <!--数据缓存-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+            <version>${boot.version}</version>
         </dependency>
     </dependencies>
 </project>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+
+    <bean id="druidConfiguration"
+          class="com.pro.base.config.DruidConfiguration"/>
+
+    <bean id="redisConfiguration" class="com.pro.base.config.RedisConfiguration"/>
+
+    <!--配置缓存白名单-->
+    <bean name="fastJsonAutoTypeConfig" class="com.pro.base.config.FastJsonAutoTypeConfig">
+        <constructor-arg name="packageList">
+            <list>
+                <value>com.cache.redis.domain</value>
+            </list>
+        </constructor-arg>
+    </bean>
+</beans>

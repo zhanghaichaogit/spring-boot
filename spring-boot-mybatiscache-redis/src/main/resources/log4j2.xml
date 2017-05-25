@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status = "off">
+    <properties>
+        <property name = "LOG_HOME">${pom.log.dir}</property>
+        <!-- 日志备份目录 -->
+        <property name = "BACKUP_HOME">${pom.log.dir.backup}</property>
+        <property name = "SERVER_NAME">${pom.log.name}</property>
+        <property name = "EVERY_FILE_SIZE">${pom.log.filesize}</property><!-- 日志切割的最小单位 -->
+        <property name = "OUTPUT_LOG_LEVEL">${pom.log.level}</property><!-- 日志输出级别 -->
+    </properties>
+    <appenders>
+        <Console name = "Console" target = "SYSTEM_OUT">
+            <ThresholdFilter level = "trace" onMatch = "ACCEPT" onMismatch = "DENY"/>
+            <PatternLayout pattern = "%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%file] - %msg%n"/>
+        </Console>
+        <!-- 通用日志 -->
+        <RollingFile name = "CommonFile" fileName = "${LOG_HOME}/${SERVER_NAME}.log"
+                     filePattern = "${LOG_HOME}/${BACKUP_HOME}/${SERVER_NAME}.%d{yyyy-MM-dd-HH}.log">
+            <PatternLayout
+                    pattern = "%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%C{36}.%M] - %msg%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size = "${EVERY_FILE_SIZE}"/>
+                <!-- 间隔时间：1h -->
+                <TimeBasedTriggeringPolicy interval = "1" modulate = "true"/>
+            </Policies>
+            <Filters>
+                <!-- 拒绝error，接受trace -->
+                <!--<ThresholdFilter level = "error" onMatch = "DENY" onMismatch = "NEUTRAL"/>-->
+                <ThresholdFilter level = "trace" onMatch = "ACCEPT" onMismatch = "DENY"/>
+            </Filters>
+        </RollingFile>
+        <!-- 通用error级日志 -->
+        <RollingFile name = "CommonFileError" fileName = "${LOG_HOME}/${SERVER_NAME}_error.log"
+                     filePattern = "${LOG_HOME}/${BACKUP_HOME}/${SERVER_NAME}.%d{yyyy-MM-dd-HH}_error.log">
+            <PatternLayout
+                    pattern = "%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%C{36}.%M:%L] - %msg%xEx%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size = "${EVERY_FILE_SIZE}"/>
+                <TimeBasedTriggeringPolicy interval = "1" modulate = "true"/>
+            </Policies>
+            <Filters>
+                <ThresholdFilter level = "error" onMatch = "ACCEPT" onMismatch = "DENY"/>
+            </Filters>
+        </RollingFile>
+    </appenders>
+    <loggers>
+        <logger name = "org.springframework" level = "INFO"/>
+        <logger name = "org.springframework.web" level = "INFO"/>
+        <!-- 打印详细的Dao轨迹，可以是具体包名、类名或者方法名 -->
+        <root level = "${OUTPUT_LOG_LEVEL}">
+            <appender-ref ref = "Console"/>
+            <appender-ref ref = "CommonFile"/>
+            <appender-ref ref = "CommonFileError"/>
+        </root>
+    </loggers>
+</configuration>
