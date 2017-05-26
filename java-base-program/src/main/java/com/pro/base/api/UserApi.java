@@ -1,11 +1,10 @@
-package com.base.core.service;
+package com.pro.base.api;
 
-import com.base.core.domain.TUser;
 import com.pro.base.domain.UserInfo;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserApi {
 
     /**
      * findAll
@@ -14,5 +13,5 @@ public interface UserService {
      */
     List<UserInfo> findAll();
 
-    List<TUser> findAllT();
+    UserInfo findOne(int id);
 }

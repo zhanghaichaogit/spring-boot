@@ -7,27 +7,7 @@
        http://www.springframework.org/schema/aop
        http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <!-- 配置druid监控spring -->
-    <bean id="druid-stat-interceptor"
-          class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor"/>
-
-    <!-- 方法名正则匹配拦截配置 -->
-    <bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut"
-          scope="prototype">
-        <property name="patterns">
-            <list>
-                <value>com.base.core.web.*</value>
-            </list>
-        </property>
-    </bean>
-    <!-- 开启切面编程功能 -->
-    <aop:config>
-        <aop:advisor id="druidAdvisor" advice-ref="druid-stat-interceptor"
-                     pointcut-ref="druid-stat-pointcut"/>
-    </aop:config>
-    <!-- 配置druid监控spring END-->
-
-    <!--用户权限控制aop-->
+    <!--用户权限控制aop 自己的监控配置-->
     <bean id="userPermissions" class="com.pro.base.aop.UserPermissionsAspect"/>
     <aop:config>
         <aop:aspect id="userPermissions-aspect" ref="userPermissions">

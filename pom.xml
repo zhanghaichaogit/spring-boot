@@ -39,17 +39,6 @@
 
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-            <exclusions>
-                <!-- 排除logback -->
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
         <!-- 模板引擎 freemarker，包含spring-boot-starter-web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -96,7 +85,12 @@
             <scope>test</scope>
         </dependency>
 
-
+        <!-- 连接池旧版本的需要用spring aop来监控更新版本后将适应spring-boot -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${alibaba.druid.version}</version>
+        </dependency>
         <!--rabbitmq-->
         <!--<dependency>-->
         <!--<groupId>org.springframework.boot</groupId>-->
@@ -108,22 +102,22 @@
         <plugins>
             <!-- 1、使用parent，打包： mvn package-->
             <!-- 2、使用依赖，打包： mvn package spring-boot:repackage -->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <!--允许linux上注册服务-->
-                <configuration>
-                    <executable>true</executable>
-                    <fork>true</fork>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.springframework.boot</groupId>-->
+                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+                <!--&lt;!&ndash;允许linux上注册服务&ndash;&gt;-->
+                <!--<configuration>-->
+                    <!--<executable>true</executable>-->
+                    <!--<fork>true</fork>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<goals>-->
+                            <!--<goal>repackage</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
             <!-- 编译插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

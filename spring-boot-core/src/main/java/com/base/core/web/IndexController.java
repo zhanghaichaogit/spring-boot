@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -32,20 +31,21 @@ public class IndexController {
     @ResponseBody
     @RequestMapping("finduser")
     public String findUser() {
-        return JSON.toJSONString(userService.findAll());
+//        return JSON.toJSONString(userService.findAll());
+        return JSON.toJSONString(userService.findAllT());
     }
 
     /**
-     * findById
+     * 查询用户
      *
-     * @param id
      * @return
      */
     @ResponseBody
-    @RequestMapping("user/{id}")
-    public String findById(@PathVariable int id) {
-        return JSON.toJSONString(userService.findOne(id));
+    @RequestMapping("finduser2")
+    public String findUser2() {
+        return JSON.toJSONString(userService.findAll());
     }
+
 
     /**
      * 数据库插入测试

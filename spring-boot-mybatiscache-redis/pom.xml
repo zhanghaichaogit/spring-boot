@@ -16,6 +16,18 @@
     <name>spring-boot-mybatiscache-redis</name>
     <description>spring-boot-mybatiscache-redis</description>
     <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <exclusions>
+                <!-- 排除logback -->
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <!--引用base-program-->
         <dependency>
             <groupId>com.baseBoot</groupId>
