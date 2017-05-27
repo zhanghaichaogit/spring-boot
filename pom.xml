@@ -36,6 +36,10 @@
         <spring-boot-starter-redis.version>2.1.0</spring-boot-starter-redis.version>
         <boot.version>1.3.5.RELEASE</boot.version>
 
+        <pom.datasource.type>com.alibaba.druid.pool.DruidDataSource</pom.datasource.type>
+        <pom.datasource.driver-class-name>com.mysql.jdbc.Driver</pom.datasource.driver-class-name>
+
+
 
     </properties>
     <dependencies>
@@ -103,20 +107,20 @@
             <!-- 1、使用parent，打包： mvn package-->
             <!-- 2、使用依赖，打包： mvn package spring-boot:repackage -->
             <!--<plugin>-->
-                <!--<groupId>org.springframework.boot</groupId>-->
-                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
-                <!--&lt;!&ndash;允许linux上注册服务&ndash;&gt;-->
-                <!--<configuration>-->
-                    <!--<executable>true</executable>-->
-                    <!--<fork>true</fork>-->
-                <!--</configuration>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<goals>-->
-                            <!--<goal>repackage</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+            <!--&lt;!&ndash;允许linux上注册服务&ndash;&gt;-->
+            <!--<configuration>-->
+            <!--<executable>true</executable>-->
+            <!--<fork>true</fork>-->
+            <!--</configuration>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<goals>-->
+            <!--<goal>repackage</goal>-->
+            <!--</goals>-->
+            <!--</execution>-->
+            <!--</executions>-->
             <!--</plugin>-->
             <!-- 编译插件 -->
             <plugin>

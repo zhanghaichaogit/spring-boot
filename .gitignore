@@ -4,4 +4,3 @@ LOG/
 *.log
 *.jar
 /target/
-.target/

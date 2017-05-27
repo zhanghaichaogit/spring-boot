@@ -3,7 +3,8 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
-    <!--切面web使druid可以监控spring,没找到spring-boot的配置方法监控不了，好奇怪-->
+
+
     <import resource="spring-config-monitor.xml"/>
 
     <import resource="spring-config-bean.xml"/>

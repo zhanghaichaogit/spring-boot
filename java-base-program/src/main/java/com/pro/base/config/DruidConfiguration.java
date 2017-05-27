@@ -52,8 +52,9 @@ public class DruidConfiguration {
     @Value("${spring.datasource.minEvictableIdleTimeMillis}")
     private int minEvictableIdleTimeMillis;
 
-    @Value("${spring.datasource.validationQuery}")
-    private String validationQuery;
+    //检查链接的sql语句
+//    @Value("${spring.datasource.validationQuery}")
+//    private String validationQuery;
 
     @Value("${spring.datasource.testWhileIdle}")
     private boolean testWhileIdle;
@@ -93,7 +94,7 @@ public class DruidConfiguration {
         datasource.setMaxWait(maxWait);
         datasource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
         datasource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
-        datasource.setValidationQuery(validationQuery);
+//        datasource.setValidationQuery(validationQuery);
         datasource.setTestWhileIdle(testWhileIdle);
         datasource.setTestOnBorrow(testOnBorrow);
         datasource.setTestOnReturn(testOnReturn);

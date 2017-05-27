@@ -2,6 +2,7 @@ package com.base.core.web;
 
 import com.alibaba.fastjson.JSON;
 import com.base.core.service.UserService;
+import com.pro.base.oauth.UserPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -100,7 +101,7 @@ public class IndexController {
      */
     @ResponseBody
     @RequestMapping(value = "permission.api")
-//    @UserPermissions(value = "wx-user-show")
+    @UserPermissions(value = "wx-user-show")
     public String userPermission() {
         return "userPermission";
     }

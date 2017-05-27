@@ -25,8 +25,19 @@ public class IndexController {
     @ResponseBody
     @RequestMapping("finduser")
     public String findUser() {
-        return JSON.toJSONString(userService.findAll());
+//        return JSON.toJSONString(userService.findAll());
+        return JSON.toJSONString(userService.findAllT());
     }
 
+    /**
+     * 查询用户
+     *
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("finduser2")
+    public String findUser2() {
+        return JSON.toJSONString(userService.findAll());
+    }
 
 }

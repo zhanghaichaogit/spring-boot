@@ -1,6 +1,7 @@
 package com.cache.redis.service;
 
-import com.cache.redis.domain.UserInfo;
+import com.cache.redis.domain.TUser;
+import com.pro.base.domain.UserInfo;
 
 import java.util.List;
 
@@ -13,5 +14,5 @@ public interface UserService {
      */
     List<UserInfo> findAll();
 
-    UserInfo findOne(int id);
+    List<TUser> findAllT();
 }
