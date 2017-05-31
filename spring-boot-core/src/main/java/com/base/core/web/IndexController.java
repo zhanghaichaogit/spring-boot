@@ -3,15 +3,19 @@ package com.base.core.web;
 import com.alibaba.fastjson.JSON;
 import com.base.core.service.UserService;
 import com.pro.base.oauth.UserPermissions;
+import com.pro.base.util.BaseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -106,5 +110,14 @@ public class IndexController {
         return "userPermission";
     }
 
+    /**
+     * 页面测试类
+     */
+    @RequestMapping(value = "viewShow", method = {RequestMethod.GET}, produces = BaseUtil.HTML)
+    public String viewShow(Map<String, Object> model) {
+        model.put("time", new Date());
+        model.put("message", "asdfasfsafasdf");
+        return "web";
+    }
 
 }

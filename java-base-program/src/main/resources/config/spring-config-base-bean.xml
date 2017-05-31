@@ -4,6 +4,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
 
+    <bean id="errorConfiguration" class="com.pro.base.config.ErrorConfiguration"/>
+
+    <bean id="errorController" class="com.pro.base.controller.ErrorController"/>
 
     <bean id="userApi"
           class="com.pro.base.api.impl.UserApiImpl"/>

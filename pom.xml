@@ -40,7 +40,6 @@
         <pom.datasource.driver-class-name>com.mysql.jdbc.Driver</pom.datasource.driver-class-name>
 
 
-
     </properties>
     <dependencies>
         <!-- 模板引擎 freemarker，包含spring-boot-starter-web -->
@@ -94,6 +93,32 @@
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
             <version>${alibaba.druid.version}</version>
+        </dependency>
+
+        <!-- 数据库驱动 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector-java.version}</version>
+        </dependency>
+
+        <!-- mybatis for spring boot -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>${mybatis-spring.boot.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <exclusions>
+                <!-- 排除logback -->
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--rabbitmq-->
         <!--<dependency>-->
@@ -202,6 +227,8 @@
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
                     <include>**/*.ftl</include>
+                    <include>**/*.jpg</include>
+                    <include>**/*.png</include>
                     <include>banner.txt</include>
                 </includes>
                 <filtering>true</filtering>
