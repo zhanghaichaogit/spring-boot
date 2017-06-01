@@ -1,6 +1,6 @@
 package com.pro.base.aop;
 
-import com.pro.base.oauth.UserPermissions;
+import com.pro.base.target.UserPermissions;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.reflect.MethodSignature;

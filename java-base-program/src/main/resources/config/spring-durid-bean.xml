@@ -19,6 +19,7 @@
           scope="prototype">
         <property name="patterns">
             <list>
+                <value>com.pro.base.controller</value>
                 <value>#{DsConfig['spring.durid.package']}</value>
             </list>
         </property>

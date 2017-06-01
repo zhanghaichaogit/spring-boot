@@ -2,7 +2,8 @@ package com.base.core.web;
 
 import com.alibaba.fastjson.JSON;
 import com.base.core.service.UserService;
-import com.pro.base.oauth.UserPermissions;
+import com.pro.base.controller.WebBaseController;
+import com.pro.base.target.UserPermissions;
 import com.pro.base.util.BaseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @Controller
-public class IndexController {
+public class IndexController extends WebBaseController {
     private final static Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
     @Resource
     private UserService userService;

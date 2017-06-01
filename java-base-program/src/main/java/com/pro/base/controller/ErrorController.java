@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.Map;
 
 @Controller
-public class ErrorController {
+public class ErrorController extends WebBaseController {
     private final static Logger LOGGER = LoggerFactory.getLogger(ErrorController.class);
 
     /**
