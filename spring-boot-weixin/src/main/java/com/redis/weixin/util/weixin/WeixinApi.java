@@ -1,5 +1,7 @@
 package com.redis.weixin.util.weixin;
 
+import com.alibaba.fastjson.JSONObject;
+import com.redis.weixin.entity.wx.WxTockenEntity;
 import com.redis.weixin.util.http.HttpUtil;
 
 import java.io.IOException;
@@ -12,23 +14,27 @@ public class WeixinApi {
 
     private static final String appid = "wxbdfdac829ca8f1ff";
     private static final String secret = "7d7a2817d7717577a2bf64c6ca943a55";
-    private static final String tocken = "hkfPl-OkZGJxfgNpvkl-FL1WcLU-eChRk5kY661NSLugOrvk0cYNPoojW5dX5MAH3PQcswH2fJztXOmedXo9EI4x6q43NvzmX5UQvWsf7u9YrLfvE3FIPA8T_YTBkPrIUPHcAGAHCU";
 
-    public static String getTocken() {
+    public static WxTockenEntity getTocken() {
         String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appid + "&secret=" + secret;
         String tocken = "";
+        WxTockenEntity wxTockenEntity = new WxTockenEntity();
         try {
             tocken = HttpUtil.getHttp(url);
+            wxTockenEntity = JSONObject.parseObject(tocken, WxTockenEntity.class);
         } catch (IOException e) {
             e.printStackTrace();
+            wxTockenEntity.setAccess_token(e.getMessage());
+            wxTockenEntity.setExpires_in(0);
         }
-        return tocken;
+
+
+        return wxTockenEntity;
     }
 
     public static String menueCreate(String menuejson) {
 
-        String tockenGet = getTocken();
-        System.out.println(getTocken());
+        String tockenGet = getTocken().getAccess_token();
         String url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=" + tockenGet;
         System.out.println(url);
         String result = "";

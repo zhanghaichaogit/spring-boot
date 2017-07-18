@@ -1,12 +1,18 @@
 package test.com.weixin;
 
+import com.alibaba.fastjson.JSONObject;
 import com.redis.weixin.SimpleApplication;
+import com.redis.weixin.entity.wx.WxParBtnEntity;
+import com.redis.weixin.entity.wx.WxTopBtnEntity;
 import com.redis.weixin.util.weixin.WeixinApi;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zhanghaichao on 2017/7/17.
@@ -18,18 +24,25 @@ public class WeixinTest {
     private static final String appid = "wxbdfdac829ca8f1ff";
     private static final String secret = "7d7a2817d7717577a2bf64c6ca943a55";
 
-    //获取tocken
-    @Test
-    public void getTocken() {
-        String tocken = "";
-        tocken = WeixinApi.getTocken();
-        System.out.println(tocken);
-    }
 
     //自定义菜单
     @Test
     public void menueCreate() {
-        String json = "{\"button\":[{\"type\":\"click\",\"name\":\"今日歌曲\",\"key\":\"V1001_TODAY_MUSIC\"},{\"name\":\"菜单\",\"sub_button\":[{\"type\":\"click\",\"name\":\"赞一下我们\",\"key\":\"V1001_GOOD\"}]}]}";
+        WxParBtnEntity wxParBtnEntity = new WxParBtnEntity();
+        WxTopBtnEntity wxTopBtnEntity1 = new WxTopBtnEntity();
+        WxTopBtnEntity wxTopBtnEntity2 = new WxTopBtnEntity();
+        List<WxTopBtnEntity> wxTopBtnEntityList = new ArrayList<>(0);
+        wxTopBtnEntity1.setName("第一个");
+        wxTopBtnEntity1.setType("click");
+        wxTopBtnEntity1.setKey("123213123");
+        wxTopBtnEntity2.setName("第二个");
+        wxTopBtnEntity2.setType("click");
+        wxTopBtnEntity2.setKey("123213123");
+        wxTopBtnEntityList.add(wxTopBtnEntity1);
+        wxTopBtnEntityList.add(wxTopBtnEntity2);
+        wxParBtnEntity.setButton(wxTopBtnEntityList);
+
+        String json = JSONObject.toJSONString(wxParBtnEntity);
         String result = WeixinApi.menueCreate(json);
         System.out.println(result);
     }
