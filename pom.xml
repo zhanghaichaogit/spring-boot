@@ -297,5 +297,6 @@
         <module>spring-boot-redis-sentinel</module>
         <module>spring-boot-rabbitmq</module>
         <module>spring-boot-mybatiscache-redis</module>
+        <module>spring-boot-weixin</module>
     </modules>
 </project>
