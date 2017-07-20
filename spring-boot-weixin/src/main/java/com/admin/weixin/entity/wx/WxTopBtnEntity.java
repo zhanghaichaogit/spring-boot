@@ -1,4 +1,4 @@
-package com.redis.weixin.entity.wx;
+package com.admin.weixin.entity.wx;
 
 import java.util.List;
 

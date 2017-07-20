@@ -1,4 +1,4 @@
-package com.redis.weixin;
+package com.admin.weixin;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

@@ -1,4 +1,4 @@
-package com.redis.weixin.entity.wx;
+package com.admin.weixin.entity.wx;
 
 /**
  * 二级菜单数组，个数应为1~5个

@@ -1,6 +1,6 @@
-package com.redis.weixin.entity.wx;
+package com.admin.weixin.entity.wx;
 
-import com.redis.weixin.entity.BaseEntity;
+import com.admin.weixin.entity.BaseEntity;
 
 /**
  * 微信tocken实体

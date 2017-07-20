@@ -1,4 +1,4 @@
-package com.redis.weixin.entity;
+package com.admin.weixin.entity;
 
 import java.io.Serializable;
 
