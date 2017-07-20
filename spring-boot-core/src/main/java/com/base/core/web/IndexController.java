@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -119,6 +121,25 @@ public class IndexController extends WebBaseController {
         model.put("time", new Date());
         model.put("message", "asdfasfsafasdf");
         return "web";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/sessions", method = RequestMethod.GET)
+    public Object sessions(HttpServletRequest request) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("sessionId", request.getSession().getId());
+        map.put("message", request.getSession().getAttribute("message_e"));
+        return map;
+    }
+
+
+    /**
+     * 页面测试类
+     */
+    @RequestMapping(value = "coreIndex", method = {RequestMethod.GET}, produces = BaseUtil.HTML)
+    public String coreIndex(Map<String, Object> model) {
+        model.put("message_e", "aaaaaaaaaaaa");
+        return "index";
     }
 
 }

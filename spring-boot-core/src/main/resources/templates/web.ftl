@@ -4,7 +4,7 @@
 
 <body>
 放在公共项目中的图片
-<img src="static/commonImg/show.jpg">
+<img src="static/commonimg/show.jpg">
 放在单独项目中的图片
 <img src="static/img/banner.jpg">
 Date: ${time?date}

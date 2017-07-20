@@ -6,4 +6,6 @@
 
     <import resource="classpath:config/spring-config-base-bean.xml"/>
 
+    <import resource="classpath:config/spring-config-dbbase-bean.xml"/>
+
 </beans>

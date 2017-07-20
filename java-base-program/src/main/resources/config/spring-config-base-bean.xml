@@ -8,6 +8,9 @@
 
     <bean id="errorController" class="com.pro.base.controller.ErrorController"/>
 
-    <bean id="userApi"
-          class="com.pro.base.api.impl.UserApiImpl"/>
+    <bean id="redisSessionConfig"
+          class="com.pro.base.config.RedisSessionConfig"/>
+
+    <bean id="viewPageController" class="com.pro.base.controller.ViewPageController"/>
+
 </beans>

@@ -25,6 +25,7 @@ public class IndexController {
     @ResponseBody
     @RequestMapping("finduser")
     public String findUser() {
+        LOGGER.info("???____");
 //        return JSON.toJSONString(userService.findAll());
         return JSON.toJSONString(userService.findAllT());
     }
