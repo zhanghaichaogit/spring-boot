@@ -3,6 +3,7 @@ package com.redis.weixin.util.weixin;
 import com.alibaba.fastjson.JSONObject;
 import com.redis.weixin.entity.wx.WxTockenEntity;
 import com.redis.weixin.util.http.HttpUtil;
+import com.redis.weixin.util.json.JsonUtil;
 
 import java.io.IOException;
 
@@ -21,7 +22,8 @@ public class WeixinApi {
         WxTockenEntity wxTockenEntity = new WxTockenEntity();
         try {
             tocken = HttpUtil.getHttp(url);
-            wxTockenEntity = JSONObject.parseObject(tocken, WxTockenEntity.class);
+            wxTockenEntity = JsonUtil.toBean(tocken, WxTockenEntity.class);
+            JSONObject.parseObject(tocken, WxTockenEntity.class);
         } catch (IOException e) {
             e.printStackTrace();
             wxTockenEntity.setAccess_token(e.getMessage());
