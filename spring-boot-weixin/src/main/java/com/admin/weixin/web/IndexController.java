@@ -26,7 +26,7 @@ public class IndexController {
     PrintWriter out = response.getWriter();
     try {
       if (isGet) {
-        String signature = request.getParameter("signature");// 微信加密签名
+        String signature = request.getParameter("signature");// 微信加密签 名
         String timestamp = request.getParameter("timestamp");// 时间戳
         String nonce = request.getParameter("nonce");// 随机数
         String echostr = request.getParameter("echostr");//随机字符串
