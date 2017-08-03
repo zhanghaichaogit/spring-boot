@@ -1,6 +1,7 @@
-package com.admin.weixin.util.weixin;
+package com.admin.weixin.util.weixin.api;
 
 import com.admin.weixin.constant.WxErrorCodeText;
+import com.admin.weixin.entity.wx.WxJssdkTicketEntity;
 import com.admin.weixin.entity.wx.WxParBtnEntity;
 import com.admin.weixin.entity.wx.WxResultEntity;
 import com.admin.weixin.entity.wx.WxTockenEntity;
@@ -11,6 +12,7 @@ import com.alibaba.fastjson.JSONObject;
 import java.io.IOException;
 
 /**
+ * 微信接口
  * Created by zhanghaichao on 2017/7/17.
  */
 public class WeixinApi {
@@ -18,6 +20,22 @@ public class WeixinApi {
   //TODO 修改appid和secret的方法
   private static final String appid = "wxbdfdac829ca8f1ff";
   private static final String secret = "7d7a2817d7717577a2bf64c6ca943a55";
+
+  /**
+   * 返回appid
+   * @return appid
+   */
+  public static String getAppId() {
+    return appid;
+  }
+
+  /**
+   * 返回secret
+   * @return secret
+   */
+  public static String secret() {
+    return secret;
+  }
 
   /**
    * 获取微信tocken
@@ -81,6 +99,22 @@ public class WeixinApi {
     return wxParBtnEntity;
   }
 
-
+  /**
+   * 生成JS-SDK权限验证的签名
+   * @return WxJssdkTicketEntity
+   * @see <a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115"></a>
+   */
+  public static WxJssdkTicketEntity getJsapiTicket() {//TODO 后面需要判断WxJssdkTicket是否从缓存中取
+    WxJssdkTicketEntity wxJssdkTicketEntity = new WxJssdkTicketEntity();
+    try {
+      String tockenGet = getTocken().getAccess_token();
+      String url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=" + tockenGet + "&type=jsapi";
+      String result = HttpUtil.getHttp(url);
+      wxJssdkTicketEntity = JsonUtil.toBean(result, WxJssdkTicketEntity.class);
+    } catch (IOException e) {
+      wxJssdkTicketEntity.setErrmsg(e.getMessage());
+    }
+    return wxJssdkTicketEntity;
+  }
 
 }
