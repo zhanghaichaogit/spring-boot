@@ -3,6 +3,7 @@ package com.admin.weixin.entity.wx;
 import com.admin.weixin.entity.BaseEntity;
 
 /**
+ * 微信返回错误信息
  * @author  zhanghaichao on 2017/7/20.
  */
 public class WxResultEntity extends BaseEntity {

@@ -1,10 +1,7 @@
 package com.admin.weixin.util.weixin.api;
 
 import com.admin.weixin.constant.WxErrorCodeText;
-import com.admin.weixin.entity.wx.WxJssdkTicketEntity;
-import com.admin.weixin.entity.wx.WxParBtnEntity;
-import com.admin.weixin.entity.wx.WxResultEntity;
-import com.admin.weixin.entity.wx.WxTockenEntity;
+import com.admin.weixin.entity.wx.*;
 import com.admin.weixin.util.http.HttpUtil;
 import com.admin.weixin.util.json.JsonUtil;
 import com.alibaba.fastjson.JSONObject;
@@ -33,7 +30,7 @@ public class WeixinApi {
    * 返回secret
    * @return secret
    */
-  public static String secret() {
+  public static String getSecret() {
     return secret;
   }
 
@@ -117,4 +114,52 @@ public class WeixinApi {
     return wxJssdkTicketEntity;
   }
 
+  /**
+   * 获取用户的 openid 和 access_token
+   * @param code 从微信获取的用户code
+   * @return WxUserAccessTokenEntity
+   */
+  public static WxUserAccessTokenEntity getUserAccessTokenOpenId(String code){
+    WxUserAccessTokenEntity wxUserAccessTokenEntity = new WxUserAccessTokenEntity();
+
+    try {
+      String url = "https://api.weixin.qq.com/sns/oauth2/access_token?" +
+              "appid=" + getAppId() +
+              "&secret=" + getSecret() +
+              "&code=" + code +
+              "&grant_type=authorization_code";
+      String result = HttpUtil.getHttp(url);
+      wxUserAccessTokenEntity = JsonUtil.toBean(result,WxUserAccessTokenEntity.class);
+      if(wxUserAccessTokenEntity.getErrcode()!=null){
+        wxUserAccessTokenEntity.setMessage(WxErrorCodeText.errorMsg(wxUserAccessTokenEntity.getErrcode()));
+      }
+    } catch (IOException e) {
+      wxUserAccessTokenEntity.setErrmsg(e.getMessage());
+    }
+    return wxUserAccessTokenEntity;
+  }
+
+  /**
+   * 获取用户微信信息
+   * @param accessToken accessToken
+   * @param openId openId用户唯一标识
+   * @return WxUserInfoEntity 用户信息实体
+   */
+  public static WxUserInfoEntity getWxUserInfo(String accessToken,String openId){
+    WxUserInfoEntity wxUserInfoEntity = new WxUserInfoEntity();
+    try {
+      String url = "https://api.weixin.qq.com/sns/userinfo?" +
+              "access_token=" + accessToken +
+              "&openid=" + openId +
+              "&lang=zh_CN";
+      String result = HttpUtil.getHttp(url);
+      wxUserInfoEntity = JsonUtil.toBean(result,WxUserInfoEntity.class);
+      if(wxUserInfoEntity.getErrcode()!=null){
+        wxUserInfoEntity.setMessage(WxErrorCodeText.errorMsg(wxUserInfoEntity.getErrcode()));
+      }
+    } catch (IOException e) {
+      wxUserInfoEntity.setErrmsg(e.getMessage());
+    }
+    return wxUserInfoEntity;
+  }
 }

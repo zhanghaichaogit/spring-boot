@@ -1,6 +1,7 @@
 package com.admin.weixin.constant;
 
 /**
+ * HttpCode
  * @author zhanghaichao on 2017/7/20.
  */
 public interface HttpCode {

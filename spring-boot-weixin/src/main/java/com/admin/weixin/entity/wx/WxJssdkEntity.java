@@ -11,7 +11,7 @@ public class WxJssdkEntity extends BaseEntity {
 
   private String appId;
 
-  private Long timestamp;
+  private String timestamp;
 
   private String nonceStr;
 
@@ -25,11 +25,11 @@ public class WxJssdkEntity extends BaseEntity {
     this.appId = appId;
   }
 
-  public Long getTimestamp() {
+  public String getTimestamp() {
     return timestamp;
   }
 
-  public void setTimestamp(Long timestamp) {
+  public void setTimestamp(String timestamp) {
     this.timestamp = timestamp;
   }
 
