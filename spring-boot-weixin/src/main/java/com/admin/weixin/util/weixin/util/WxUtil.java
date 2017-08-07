@@ -1,6 +1,11 @@
 package com.admin.weixin.util.weixin.util;
 
-import com.admin.weixin.entity.wx.*;
+import com.admin.weixin.entity.wx.WxJssdkEntity;
+import com.admin.weixin.entity.wx.WxParBtnEntity;
+import com.admin.weixin.entity.wx.WxResultEntity;
+import com.admin.weixin.entity.wx.WxTockenEntity;
+import com.admin.weixin.entity.wx.WxUserAccessTokenEntity;
+import com.admin.weixin.entity.wx.WxUserInfoEntity;
 import com.admin.weixin.util.code.SHA;
 import com.admin.weixin.util.weixin.api.WeixinApi;
 import com.alibaba.druid.util.StringUtils;
@@ -41,37 +46,30 @@ public class WxUtil {
     return WeixinApi.getMenue();
   }
 
-
   /**
    * 生成JS-SDK权限验证的签名 以及调用微信jssdk的所有参数
    * @param url 当前页面的url
    * @return WxJssdkEntity
    */
-  public static WxJssdkEntity WxJssdkSign(String url){
+  public static WxJssdkEntity WxJssdkSign(String url) {
     WxJssdkEntity wxJssdkEntity = new WxJssdkEntity();
     String nonce_str = UUID.randomUUID().toString();
-    String   timestamp = Long.toString(System.currentTimeMillis() / 1000);
-    String string1;
+    String timestamp = Long.toString(System.currentTimeMillis() / 1000);
     String signature = "";
     String jsapi_ticket = WeixinApi.getJsapiTicket().getTicket();
     //注意这里参数名必须全部小写，且必须有序
-    string1 = "jsapi_ticket=" + jsapi_ticket +
-            "&noncestr=" + nonce_str +
-            "&timestamp=" + timestamp +
-            "&url=" + url;
-    try
-    {
+    String string1 = "jsapi_ticket=" + jsapi_ticket +
+        "&noncestr=" + nonce_str +
+        "&timestamp=" + timestamp +
+        "&url=" + url;
+    try {
       MessageDigest crypt = MessageDigest.getInstance("SHA-1");
       crypt.reset();
       crypt.update(string1.getBytes("UTF-8"));
       signature = SHA.byteToHex(crypt.digest());
-    }
-    catch (NoSuchAlgorithmException e)
-    {
+    } catch (NoSuchAlgorithmException e) {
       e.printStackTrace();
-    }
-    catch (UnsupportedEncodingException e)
-    {
+    } catch (UnsupportedEncodingException e) {
       e.printStackTrace();
     }
     wxJssdkEntity.setAppId(WeixinApi.getAppId());
@@ -82,38 +80,38 @@ public class WxUtil {
     return wxJssdkEntity;
   }
 
-    /**
-     * 返回oauth 链接
-     * @param redirectUri 链接地址
-     * @return 返回oauth 链接
-     */
-  public static String getOauthUrl(String redirectUri){
-      String url = "https://open.weixin.qq.com/connect/oauth2/authorize?" +
-              "appid=" + WeixinApi.getAppId()+
-              "&redirect_uri=" +redirectUri+
-              "&response_type=code" +
-              "&scope=snsapi_userinfo" +
-              "&state=STATE" +
-              "#wechat_redirect";
+  /**
+   * 返回oauth 链接
+   * @param redirectUri 链接地址
+   * @return 返回oauth 链接
+   */
+  public static String getOauthUrl(String redirectUri) {
+    String url = "https://open.weixin.qq.com/connect/oauth2/authorize?" +
+        "appid=" + WeixinApi.getAppId() +
+        "&redirect_uri=" + redirectUri +
+        "&response_type=code" +
+        "&scope=snsapi_userinfo" +
+        "&state=STATE" +
+        "#wechat_redirect";
     return url;
   }
 
-    /**
-     * 根据微信code获取用户微信信息
-     * @param code 用户微信code
-     * @return 返回用户微信信息 WxUserInfoEntity
-     */
-  public static WxUserInfoEntity getUserInfo(String code){
-      WxUserInfoEntity wxUserInfoEntity = new WxUserInfoEntity();
-      WxUserAccessTokenEntity wxUserAccessTokenEntity = WeixinApi.getUserAccessTokenOpenId(code);
-      if(!StringUtils.isEmpty(wxUserAccessTokenEntity.getMessage())){
-          wxUserInfoEntity.setMessage(wxUserAccessTokenEntity.getMessage());
-          wxUserInfoEntity.setErrcode(wxUserAccessTokenEntity.getErrcode());
-          wxUserInfoEntity.setErrmsg(wxUserAccessTokenEntity.getErrmsg());
-      }else{
-          wxUserInfoEntity = WeixinApi.getWxUserInfo(wxUserAccessTokenEntity.getAccess_token(),wxUserAccessTokenEntity.getOpenid());
-      }
-      return wxUserInfoEntity;
+  /**
+   * 根据微信code获取用户微信信息
+   * @param code 用户微信code
+   * @return 返回用户微信信息 WxUserInfoEntity
+   */
+  public static WxUserInfoEntity getUserInfo(String code) {
+    WxUserInfoEntity wxUserInfoEntity = new WxUserInfoEntity();
+    WxUserAccessTokenEntity wxUserAccessTokenEntity = WeixinApi.getUserAccessTokenOpenId(code);
+    if (!StringUtils.isEmpty(wxUserAccessTokenEntity.getMessage())) {
+      wxUserInfoEntity.setMessage(wxUserAccessTokenEntity.getMessage());
+      wxUserInfoEntity.setErrcode(wxUserAccessTokenEntity.getErrcode());
+      wxUserInfoEntity.setErrmsg(wxUserAccessTokenEntity.getErrmsg());
+    } else {
+      wxUserInfoEntity = WeixinApi.getWxUserInfo(wxUserAccessTokenEntity.getAccess_token(), wxUserAccessTokenEntity.getOpenid());
+    }
+    return wxUserInfoEntity;
   }
 
 }
