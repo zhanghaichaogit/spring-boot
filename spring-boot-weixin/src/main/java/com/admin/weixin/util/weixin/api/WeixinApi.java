@@ -4,6 +4,7 @@ import com.admin.weixin.constant.WxErrorCodeText;
 import com.admin.weixin.entity.wx.WxJssdkTicketEntity;
 import com.admin.weixin.entity.wx.WxParBtnEntity;
 import com.admin.weixin.entity.wx.WxResultEntity;
+import com.admin.weixin.entity.wx.WxTmplBaseEntity;
 import com.admin.weixin.entity.wx.WxTockenEntity;
 import com.admin.weixin.entity.wx.WxUserAccessTokenEntity;
 import com.admin.weixin.entity.wx.WxUserInfoEntity;
@@ -168,5 +169,21 @@ public class WeixinApi {
       wxUserInfoEntity.setErrmsg(e.getMessage());
     }
     return wxUserInfoEntity;
+  }
+
+  /**
+   * 推送模板消息
+   * @param wxTmplBaseEntity 消息实体
+   * @see <a href="https://mp.weixin.qq.com/debug/cgi-bin/readtmpl?t=tmplmsg/faq_tmpl">推送模板消息</a>
+   */
+  public static void sendTemplate(WxTmplBaseEntity wxTmplBaseEntity) {
+    try {
+      String token = getTocken().getAccess_token();
+      String data = wxTmplBaseEntity.toJSON();
+      String url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + token;
+      String result = HttpUtil.postHttp(url, data);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }

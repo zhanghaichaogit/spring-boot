@@ -3,6 +3,7 @@ package com.admin.weixin.util.weixin.util;
 import com.admin.weixin.entity.wx.WxJssdkEntity;
 import com.admin.weixin.entity.wx.WxParBtnEntity;
 import com.admin.weixin.entity.wx.WxResultEntity;
+import com.admin.weixin.entity.wx.WxTmplBaseEntity;
 import com.admin.weixin.entity.wx.WxTockenEntity;
 import com.admin.weixin.entity.wx.WxUserAccessTokenEntity;
 import com.admin.weixin.entity.wx.WxUserInfoEntity;
@@ -112,6 +113,14 @@ public class WxUtil {
       wxUserInfoEntity = WeixinApi.getWxUserInfo(wxUserAccessTokenEntity.getAccess_token(), wxUserAccessTokenEntity.getOpenid());
     }
     return wxUserInfoEntity;
+  }
+
+  /**
+   * 推送模板消息
+   * @param wxTmplBaseEntity 消息实体
+   */
+  public static void sendTemplate(WxTmplBaseEntity wxTmplBaseEntity) {
+    WeixinApi.sendTemplate(wxTmplBaseEntity);
   }
 
 }
