@@ -10,7 +10,9 @@ import com.admin.weixin.entity.wx.WxUserAccessTokenEntity;
 import com.admin.weixin.entity.wx.WxUserInfoEntity;
 import com.admin.weixin.util.http.HttpUtil;
 import com.admin.weixin.util.json.JsonUtil;
+import com.admin.weixin.util.redis.RedisUtil;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 
@@ -23,6 +25,8 @@ public class WeixinApi {
   //TODO 修改appid和secret的方法
   private static final String appid = "wxbdfdac829ca8f1ff";
   private static final String secret = "7d7a2817d7717577a2bf64c6ca943a55";
+//  private static final String appid = "wx7e3a2fb8a60efdf8";
+//  private static final String secret = "3dbe421ffcea5da8ea8496b160537dbb";
 
   /**
    * 返回appid
@@ -46,13 +50,18 @@ public class WeixinApi {
    * @see <a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140183">获取微信access_token</a>
    */
   public static WxTockenEntity getTocken() {
-    //TODO 这里要加如判断：如过在规定时间内从缓存中获取到tocken则从缓存中取出
     String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appid + "&secret=" + secret;
     WxTockenEntity wxTockenEntity = new WxTockenEntity();
+    String code = appid + secret;
+    String redistocken = RedisUtil.get(code);
+    if (StringUtils.isNotBlank(redistocken)) {
+      wxTockenEntity.setAccess_token(redistocken);
+      return wxTockenEntity;
+    }
     try {
       String tocken = HttpUtil.getHttp(url);
       wxTockenEntity = JsonUtil.toBean(tocken, WxTockenEntity.class);
-      JSONObject.parseObject(tocken, WxTockenEntity.class);
+      RedisUtil.set(code, wxTockenEntity.getAccess_token(), 7200l);
     } catch (IOException e) {
       e.printStackTrace();
       wxTockenEntity.setAccess_token(e.getMessage());

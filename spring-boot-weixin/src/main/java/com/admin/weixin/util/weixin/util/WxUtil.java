@@ -92,7 +92,7 @@ public class WxUtil {
         "&redirect_uri=" + redirectUri +
         "&response_type=code" +
         "&scope=snsapi_userinfo" +
-        "&state=STATE" +
+        "&state=zengzenghaha曾" +
         "#wechat_redirect";
     return url;
   }

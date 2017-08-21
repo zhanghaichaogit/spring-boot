@@ -7,6 +7,7 @@ import com.admin.weixin.entity.wx.WxUserInfoEntity;
 import com.admin.weixin.util.json.JsonUtil;
 import com.admin.weixin.util.weixin.util.WxUtil;
 import com.admin.weixin.util.xml.XmlUtil;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,12 +18,16 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 @RequestMapping(value = "/v/weixin")
 public class IndexController {
   @Resource
   private Global global;
+
+  @Resource
+  private StringRedisTemplate stringRedisTemplate;
 
   /**
    * jssdk测试页面
@@ -70,6 +75,18 @@ public class IndexController {
     }
     System.out.println(JsonUtil.toJSONString(map));
     return JsonUtil.toJSONString(map);
+  }
+
+  /**
+   * redis 测试 这个是默认连接一个redis服务的情况
+   *
+   * @return
+   */
+  @ResponseBody
+  @RequestMapping("jedis")
+  public String jedisTest() {
+    stringRedisTemplate.opsForValue().set("key", "value", 200, TimeUnit.SECONDS);
+    return "abc";
   }
 
 }

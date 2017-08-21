@@ -3,9 +3,12 @@ package com.admin.weixin.test;
 import com.admin.weixin.SimpleApplication;
 import com.admin.weixin.entity.wx.WxJssdkEntity;
 import com.admin.weixin.entity.wx.WxParBtnEntity;
+import com.admin.weixin.entity.wx.WxResultEntity;
 import com.admin.weixin.entity.wx.WxTmplBaseEntity;
 import com.admin.weixin.entity.wx.WxTmplDataEntity;
+import com.admin.weixin.entity.wx.WxTockenEntity;
 import com.admin.weixin.entity.wx.WxTopBtnEntity;
+import com.admin.weixin.util.json.JsonUtil;
 import com.admin.weixin.util.weixin.util.WxUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,15 +45,18 @@ public class ServiceTest {
     wxTopBtnEntity2.setUrl(WxUtil.getOauthUrl("http://56b5e914.ngrok.io/v/weixin/userInfo.html"));
 
     WxTopBtnEntity wxTopBtnEntity3 = new WxTopBtnEntity();
-    wxTopBtnEntity3.setName("一卡通");
+    wxTopBtnEntity3.setName("曾一卡");
     wxTopBtnEntity3.setType("view");
-    wxTopBtnEntity3.setUrl(WxUtil.getOauthUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbdfdac829ca8f1ff&redirect_uri=http%3A%2F%2Fschp.tiantianzaixian.net%2FOneCardSolution%2FparentPay&response_type=code&scope=snsapi_base&state=37021210QRbXPL4#wechat_redirect"));
+    String url = WxUtil.getOauthUrl("http://schp.tiantianzaixian.net/OneCardSolution/parentPay?state=zengzenghaha曾");
+    System.out.println(url);
+    wxTopBtnEntity3.setUrl(url);
     List<WxTopBtnEntity> wxTopBtnEntityList = new ArrayList<>(0);
-    wxTopBtnEntityList.add(wxTopBtnEntity);
-    wxTopBtnEntityList.add(wxTopBtnEntity2);
+//    wxTopBtnEntityList.add(wxTopBtnEntity);
+//    wxTopBtnEntityList.add(wxTopBtnEntity2);
     wxTopBtnEntityList.add(wxTopBtnEntity3);
     wxParBtnEntity.setButton(wxTopBtnEntityList);
-    WxUtil.menueCreate(wxParBtnEntity);
+    WxResultEntity resultEntity = WxUtil.menueCreate(wxParBtnEntity);
+    System.out.println(JsonUtil.toJSONString(resultEntity));
   }
 
   @Test
@@ -73,6 +79,13 @@ public class ServiceTest {
     String json = wxTmplBaseEntity.toJSON();
     System.out.println(json);
     WxUtil.sendTemplate(wxTmplBaseEntity);
+  }
+
+  @Test
+  public void getTocken() {
+    WxTockenEntity wxTockenEntity = WxUtil.getTocken();
+    String json = JsonUtil.toJSONString(wxTockenEntity);
+    System.out.println(json);
   }
 
 }
