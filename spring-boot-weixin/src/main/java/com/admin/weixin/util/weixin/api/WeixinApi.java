@@ -22,34 +22,14 @@ import java.io.IOException;
  */
 public class WeixinApi {
 
-  //TODO 修改appid和secret的方法
-  private static final String appid = "wxbdfdac829ca8f1ff";
-  private static final String secret = "7d7a2817d7717577a2bf64c6ca943a55";
-//  private static final String appid = "wx7e3a2fb8a60efdf8";
-//  private static final String secret = "3dbe421ffcea5da8ea8496b160537dbb";
-
-  /**
-   * 返回appid
-   * @return appid
-   */
-  public static String getAppId() {
-    return appid;
-  }
-
-  /**
-   * 返回secret
-   * @return secret
-   */
-  public static String getSecret() {
-    return secret;
-  }
-
   /**
    * 获取微信tocken
+   * @param appid 服务号appid
+   * @param secret 服务号appid
    * @return WxTockenEntity
    * @see <a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140183">获取微信access_token</a>
    */
-  public static WxTockenEntity getTocken() {
+  public static WxTockenEntity getTocken(String appid, String secret) {
     String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appid + "&secret=" + secret;
     WxTockenEntity wxTockenEntity = new WxTockenEntity();
     String code = appid + secret;
@@ -73,12 +53,14 @@ public class WeixinApi {
   /**
    * 创建底部菜单
    * @param wxParBtnEntity 菜单按钮实体
+   * @param appid 服务号appid
+   * @param secret 服务号appid
    * @return 返回是否创建成功
    * @see <a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141013">创建微信菜单</a>
    */
-  public static WxResultEntity menueCreate(WxParBtnEntity wxParBtnEntity) {
+  public static WxResultEntity menueCreate(WxParBtnEntity wxParBtnEntity, String appid, String secret) {
     String menuejson = JsonUtil.toJSONString(wxParBtnEntity);
-    String tockenGet = getTocken().getAccess_token();
+    String tockenGet = getTocken(appid, secret).getAccess_token();
     String url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=" + tockenGet;
     WxResultEntity wxResultEntity = new WxResultEntity();
     try {
@@ -93,13 +75,15 @@ public class WeixinApi {
 
   /**
    * 获取菜单接口
+   * @param appid 服务号appid
+   * @param secret 服务号appid
    * @return 返回WxParBtnEntity
    * @see <a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141014">获取菜单</a>
    */
-  public static WxParBtnEntity getMenue() {
+  public static WxParBtnEntity getMenue(String appid, String secret) {
     WxParBtnEntity wxParBtnEntity = new WxParBtnEntity();
     try {
-      String tockenGet = getTocken().getAccess_token();
+      String tockenGet = getTocken(appid, secret).getAccess_token();
       String url = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token=" + tockenGet;
       String result = HttpUtil.getHttp(url);
       //获取菜单比创建菜单的时候多了一层meun
@@ -113,13 +97,15 @@ public class WeixinApi {
 
   /**
    * 生成JS-SDK权限验证的签名
+   * @param appid 服务号appid
+   * @param secret 服务号appid
    * @return WxJssdkTicketEntity
    * @see <a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115">生成JS-SDK权限验证的签名</a>
    */
-  public static WxJssdkTicketEntity getJsapiTicket() {//TODO 后面需要判断WxJssdkTicket是否从缓存中取
+  public static WxJssdkTicketEntity getJsapiTicket(String appid, String secret) {//TODO 后面需要判断WxJssdkTicket是否从缓存中取
     WxJssdkTicketEntity wxJssdkTicketEntity = new WxJssdkTicketEntity();
     try {
-      String tockenGet = getTocken().getAccess_token();
+      String tockenGet = getTocken(appid, secret).getAccess_token();
       String url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=" + tockenGet + "&type=jsapi";
       String result = HttpUtil.getHttp(url);
       wxJssdkTicketEntity = JsonUtil.toBean(result, WxJssdkTicketEntity.class);
@@ -132,16 +118,18 @@ public class WeixinApi {
   /**
    * 获取用户的 openid 和 access_token
    * @param code 从微信获取的用户code
+   * @param appid 服务号appid
+   * @param secret 服务号appid
    * @return WxUserAccessTokenEntity
    * @see <a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842">获取用户的 openid 和 access_token</a>
    */
-  public static WxUserAccessTokenEntity getUserAccessTokenOpenId(String code) {
+  public static WxUserAccessTokenEntity getUserAccessTokenOpenId(String code, String appid, String secret) {
     WxUserAccessTokenEntity wxUserAccessTokenEntity = new WxUserAccessTokenEntity();
 
     try {
       String url = "https://api.weixin.qq.com/sns/oauth2/access_token?" +
-          "appid=" + getAppId() +
-          "&secret=" + getSecret() +
+          "appid=" + appid +
+          "&secret=" + secret +
           "&code=" + code +
           "&grant_type=authorization_code";
       String result = HttpUtil.getHttp(url);
@@ -183,11 +171,13 @@ public class WeixinApi {
   /**
    * 推送模板消息
    * @param wxTmplBaseEntity 消息实体
+   * @param appid 服务号appid
+   * @param secret 服务号appid
    * @see <a href="https://mp.weixin.qq.com/debug/cgi-bin/readtmpl?t=tmplmsg/faq_tmpl">推送模板消息</a>
    */
-  public static void sendTemplate(WxTmplBaseEntity wxTmplBaseEntity) {
+  public static void sendTemplate(WxTmplBaseEntity wxTmplBaseEntity, String appid, String secret) {
     try {
-      String token = getTocken().getAccess_token();
+      String token = getTocken(appid, secret).getAccess_token();
       String data = wxTmplBaseEntity.toJSON();
       String url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + token;
       String result = HttpUtil.postHttp(url, data);
